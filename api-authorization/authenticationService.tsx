@@ -2,10 +2,10 @@ import dbConnection from "../localDatabase/databaseConnection";
 import dbConstants from "../localDatabase/databaseConstants";
 import dbCommands from "../localDatabase/databaseCommands";
 import { apiRoutes } from "../apiRoutes";
+import axios from "axios";
 
-const loginUser = () => {
-    console.log(apiRoutes.Test);
-};
+const registerUser = (bodyFormData: FormData) =>
+    axios.post(apiRoutes.Register, bodyFormData, { headers: { "Content-Type": "multipart/form-data" } });
 
 const isAuthenticated = (): boolean => {
     let isAuth = false;
@@ -36,7 +36,7 @@ const isAuthenticated = (): boolean => {
 
 const authService = {
     isAuthenticated,
-    loginUser,
+    registerUser,
 };
 
 export default authService;
