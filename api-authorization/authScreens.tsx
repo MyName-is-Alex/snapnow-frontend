@@ -1,9 +1,10 @@
 import { NavigationProp } from "@react-navigation/native";
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import { FC, ComponentType } from "react";
+import { ComponentType } from "react";
 import { appAuthPaths } from "./applicationAuthorizationPaths";
-import Login from "../components/Login";
-import Register from "../components/Register";
+import Login from "../components/authComponents/Login";
+import Register from "../components/authComponents/Register";
+import ConfirmEmail from "../components/authComponents/ConfirmEmail";
 
 export type ScreenProps = {
     navigation: NavigationProp<any>;
@@ -32,9 +33,18 @@ const screens: Screen[] = [
     },
     {
         name: appAuthPaths.Login,
+        // @ts-ignore
         component: Login,
         options: {
             headerTitle: "Login",
+        },
+    },
+    {
+        name: appAuthPaths.ConfirmEmail,
+        // @ts-ignore
+        component: ConfirmEmail,
+        options: {
+            headerTitle: "Confirm email",
         },
     },
 ];

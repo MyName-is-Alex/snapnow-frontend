@@ -1,53 +1,43 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import * as SQLite from "expo-sqlite";
 import authService from "./api-authorization/authenticationService";
-import * as Network from "expo-network";
-import { SafeAreaView } from "react-native-safe-area-context";
-import AuthenticationNavigator from "./components/AuthenticationNavigator";
+import AuthenticationNavigator from "./components/authComponents/AuthenticationNavigator";
 import { NativeBaseProvider } from "native-base";
+import theme from "./themes/customTheme";
+import * as Font from "expo-font";
+import { customFonts } from "./fonts/customFonts";
+import { NavigationContainer } from "@react-navigation/native";
+import Loading from "./components/Loading";
+import AppNavigator from "./components/AppNavigator";
+import { AppContext } from "./appContext";
 
 export default function App() {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
+    const [appLoading, setAppLoading] = useState<boolean>(true);
+
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        setIsAuthenticated(authService.isAuthenticated());
+        Font.loadAsync(customFonts).then(() => {
+            setAppLoading(false);
+        });
+
+        authService.isAuthenticated().then((result) => {
+            setIsAuthenticated(result);
+            console.log(isAuthenticated);
+        });
     }, []);
 
     return (
-        <NativeBaseProvider>
-            {!isAuthenticated ? (
-                <AuthenticationNavigator />
+        <NativeBaseProvider theme={theme}>
+            {appLoading ? (
+                <Loading />
             ) : (
-                <View>
-                    <Text></Text>
-                </View>
+                <AppContext.Provider
+                    value={{ isAuthenticated: isAuthenticated, setIsAuthenticated: setIsAuthenticated }}>
+                    <NavigationContainer>
+                        {isAuthenticated ? <AppNavigator /> : <AuthenticationNavigator />}
+                    </NavigationContainer>
+                </AppContext.Provider>
             )}
         </NativeBaseProvider>
     );
-
-    if (!isAuthenticated) {
-        return (
-            <NativeBaseProvider>
-                <AuthenticationNavigator />
-            </NativeBaseProvider>
-        );
-    }
-    return (
-        <View>
-            <Text></Text>
-        </View>
-    );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-});
