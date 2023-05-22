@@ -1,5 +1,5 @@
 import { View, Text } from "native-base";
-import { ScreenProps } from "../../screen/appScreens";
+import { ScreenProps } from "../../types/screenTypes";
 
 const ChatList = ({ navigation }: ScreenProps) => {
     return (

@@ -44,7 +44,6 @@ const isAuthenticated = async (): Promise<boolean> => {
                 expoSecureStore.deleteItem("Auth");
                 return false;
             }
-            console.log("eeeeee");
 
             return true;
         }

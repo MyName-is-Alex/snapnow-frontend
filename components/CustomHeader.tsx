@@ -5,6 +5,8 @@ import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
 const CustomHeader = (props: NativeStackHeaderProps) => {
+    const routeParams = props.route.params;
+
     return (
         <HStack
             // @ts-ignore
@@ -15,31 +17,46 @@ const CustomHeader = (props: NativeStackHeaderProps) => {
             <Box display={"flex"} flexDirection={"row"} h={"34px"} w={"78px"} justifyContent={"space-between"}>
                 <Button
                     shadow={5}
-                    _pressed={{ bg: "primaryPurple.500" }}
-                    bg={"secondaryPurple.500"}
+                    // @ts-ignore
+                    _pressed={{ bg: routeParams.buttonBackground, style: { opacity: 0.6 } }}
+                    // @ts-ignore
+                    bg={routeParams.buttonBackground}
                     borderRadius={50}
                     h={"34px"}
                     w={"34px"}
                     justifyContent={"center"}
                     alignItems={"center"}>
-                    <Icon as={<Feather name="command" />} size={6} color="black" />
+                    <Icon
+                        as={<Feather name="command" />}
+                        size={6}
+                        //@ts-ignore
+                        color={routeParams.icons}
+                    />
                 </Button>
                 <Button
                     shadow={5}
-                    _pressed={{ bg: "primaryPurple.500" }}
-                    bg={"secondaryPurple.500"}
+                    // @ts-ignore
+                    _pressed={{ bg: routeParams.buttonBackground, style: { opacity: 0.6 } }}
+                    // @ts-ignore
+                    bg={routeParams.buttonBackground}
                     borderRadius={50}
                     h={"34px"}
                     w={"34px"}
                     justifyContent={"center"}
                     alignItems={"center"}>
-                    <Icon as={<MaterialIcons name="search" />} size={6} color="primaryYellow.500" />
+                    <Icon
+                        as={<MaterialIcons name="search" />}
+                        size={6}
+                        //@ts-ignore
+                        color={routeParams.icons}
+                    />
                 </Button>
             </Box>
             {/* MIDDLE */}
             <Box>
                 <Text
-                    color={"primaryWhite.500"}
+                    //@ts-ignore
+                    color={routeParams.titleText}
                     textAlign={"center"}
                     fontFamily={"heading"}
                     fontWeight={"400"}
@@ -47,29 +64,43 @@ const CustomHeader = (props: NativeStackHeaderProps) => {
                     {props.route.name}
                 </Text>
             </Box>
-            {/* MIDDLE */}
+            {/* MIDDLE end */}
             <Box display={"flex"} flexDirection={"row"} h={"34px"} w={"78px"} justifyContent={"space-between"}>
                 <Button
                     shadow={5}
-                    _pressed={{ bg: "primaryPurple.500" }}
-                    bg={"secondaryPurple.500"}
+                    //@ts-ignore
+                    _pressed={{ bg: routeParams.buttonBackground, style: { opacity: 0.6 } }}
+                    //@ts-ignore
+                    bg={routeParams.buttonBackground}
                     borderRadius={50}
                     h={"34px"}
                     w={"34px"}
                     justifyContent={"center"}
                     alignItems={"center"}>
-                    <Icon as={<MaterialIcons name="add" />} size={7} color="primaryYellow.500" />
+                    <Icon
+                        as={<MaterialIcons name="add" />}
+                        size={7}
+                        //@ts-ignore
+                        color={routeParams.icons}
+                    />
                 </Button>
                 <Button
                     shadow={5}
-                    _pressed={{ bg: "primaryPurple.500" }}
-                    bg={"secondaryPurple.500"}
+                    //@ts-ignore
+                    _pressed={{ bg: routeParams.buttonBackground, style: { opacity: 0.6 } }}
+                    //@ts-ignore
+                    bg={routeParams.buttonBackground}
                     borderRadius={50}
                     h={"34px"}
                     w={"34px"}
                     justifyContent={"center"}
                     alignItems={"center"}>
-                    <Icon as={<Entypo name="dots-three-horizontal" />} size={7} color="primaryYellow.500" />
+                    <Icon
+                        as={<Entypo name="dots-three-horizontal" />}
+                        size={7}
+                        //@ts-ignore
+                        color={routeParams.icons}
+                    />
                 </Button>
             </Box>
         </HStack>

@@ -9,11 +9,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import Loading from "./components/Loading";
 import AppNavigator from "./components/AppNavigator";
 import { AppContext } from "./appContext";
+import { expoSecureStore } from "./api-authorization/expoSecureStore";
 
 export default function App() {
     const [appLoading, setAppLoading] = useState<boolean>(true);
 
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+    // expoSecureStore.deleteItem("Auth").then((r) => {
+    //     console.log(r);
+    // });
 
     useEffect(() => {
         Font.loadAsync(customFonts).then(() => {
@@ -22,7 +27,6 @@ export default function App() {
 
         authService.isAuthenticated().then((result) => {
             setIsAuthenticated(result);
-            console.log(isAuthenticated);
         });
     }, []);
 

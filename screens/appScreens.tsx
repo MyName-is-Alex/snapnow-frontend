@@ -3,23 +3,8 @@ import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { ComponentType } from "react";
 import { appPaths } from "./applicationPaths";
 import ChatList from "../components/chatComponents/ChatList";
-
-export type ScreenProps = {
-    navigation: NavigationProp<any>;
-    route: any;
-};
-
-export type ScreenOptions = {
-    headerTitle: string;
-    headerTitleStyle: any;
-    headerStyle: any;
-};
-
-export type Screen = {
-    name: string;
-    component: ComponentType<ScreenProps>;
-    options: NativeStackNavigationOptions;
-};
+import { Screen } from "../types/screenTypes";
+import CustomHeader from "../components/CustomHeader";
 
 const screens: Screen[] = [
     {
@@ -30,6 +15,13 @@ const screens: Screen[] = [
             headerStyle: {
                 backgroundColor: "primaryPurple.500",
             },
+            header: CustomHeader,
+        },
+        headerColors: {
+            titleText: "primaryWhite.500",
+            icons: "primaryYellow.500",
+            buttonBackground: "secondaryPurple.500",
+            background: "primaryPurple.500",
         },
     },
 ];
