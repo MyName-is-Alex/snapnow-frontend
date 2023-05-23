@@ -24,6 +24,15 @@ export default extendTheme({
         pressedBlue: {
             500: "#9891e4",
         },
+        primaryGrey: {
+            500: "#E1E1E1",
+        },
+        textColorPrimary: {
+            500: "#4E4E4E",
+        },
+        baseWhite: {
+            500: "#FFFFFF",
+        },
     },
 
     fontConfig: {
@@ -48,6 +57,7 @@ export default extendTheme({
     },
     fontSizes: {
         title: "24px",
+        name: "20px",
     },
 
     fonts: {

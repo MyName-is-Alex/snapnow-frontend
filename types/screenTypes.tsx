@@ -1,10 +1,10 @@
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { ComponentType } from "react";
 
 export type ScreenProps = {
     navigation: NavigationProp<any>;
-    route: any;
+    route: RouteProp<any>;
 };
 
 export type HeaderColors = {

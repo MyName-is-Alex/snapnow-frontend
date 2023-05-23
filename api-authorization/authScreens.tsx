@@ -9,6 +9,7 @@ import ConfirmEmail from "../components/authComponents/ConfirmEmail";
 export type ScreenProps = {
     navigation: NavigationProp<any>;
     route: any;
+    options: any;
 };
 
 export type ScreenOptions = {

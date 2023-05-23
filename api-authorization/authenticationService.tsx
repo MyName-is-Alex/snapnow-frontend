@@ -1,24 +1,7 @@
 import { apiRoutes } from "../apiRoutes";
 import axios from "axios";
-import { Role } from "../stores/roleStore";
 import { expoSecureStore } from "./expoSecureStore";
-
-export type RegisterDataType = {
-    email: string;
-    password: string;
-    confirmPassword: string;
-    phoneNumber: string;
-    role: Role | undefined;
-};
-export type LoginDataType = {
-    email: string;
-    password: string;
-};
-export type Cookie = {
-    key: string;
-    value: string;
-    expireDate: string;
-};
+import { Cookie } from "../types/AuthTypes";
 
 const registerUser = (bodyFormData: FormData) => {
     return axios.post(apiRoutes.Register, bodyFormData, { headers: { "Content-Type": "multipart/form-data" } });
@@ -29,6 +12,7 @@ const loginUser = (bodyFormData: FormData) => {
 
 const logout = async () => {
     await expoSecureStore.deleteItem("Auth");
+    return axios.post(apiRoutes.Logout);
 };
 
 const isAuthenticated = async (): Promise<boolean> => {

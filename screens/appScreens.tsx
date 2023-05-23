@@ -1,10 +1,8 @@
-import { NavigationProp } from "@react-navigation/native";
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import { ComponentType } from "react";
 import { appPaths } from "./applicationPaths";
 import ChatList from "../components/chatComponents/ChatList";
-import { Screen } from "../types/screenTypes";
+import { Screen } from "../types/ScreenTypes";
 import CustomHeader from "../components/CustomHeader";
+import ChatBox from "../components/chatComponents/ChatBox";
 
 const screens: Screen[] = [
     {
@@ -22,6 +20,23 @@ const screens: Screen[] = [
             icons: "primaryYellow.500",
             buttonBackground: "secondaryPurple.500",
             background: "primaryPurple.500",
+        },
+    },
+    {
+        name: appPaths.ChatBox,
+        component: ChatBox,
+        options: {
+            headerTitle: "ChatBox",
+            headerStyle: {
+                backgroundColor: "baseWhite.500",
+            },
+            header: CustomHeader,
+        },
+        headerColors: {
+            titleText: "textColorPrimary.500",
+            icons: "textColorPrimary.500",
+            buttonBackground: "primaryGrey.500",
+            background: "baseWhite.500",
         },
     },
 ];

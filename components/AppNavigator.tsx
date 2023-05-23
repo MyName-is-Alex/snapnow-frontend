@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import screens from "../screens/appScreens";
 import CustomHeader from "./CustomHeader";
-import { Screen } from "../types/screenTypes";
+import { Screen } from "../types/ScreenTypes";
 
 const AppStack = createNativeStackNavigator();
 

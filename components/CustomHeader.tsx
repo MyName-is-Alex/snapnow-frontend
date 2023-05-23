@@ -61,7 +61,8 @@ const CustomHeader = (props: NativeStackHeaderProps) => {
                     fontFamily={"heading"}
                     fontWeight={"400"}
                     fontSize={"title"}>
-                    {props.route.name}
+                    {/* @ts-ignore */}
+                    {props.options.headerTitle}
                 </Text>
             </Box>
             {/* MIDDLE end */}

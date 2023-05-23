@@ -17,8 +17,9 @@ import {
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { appAuthPaths } from "../../api-authorization/applicationAuthorizationPaths";
-import roleStore, { Role } from "../../stores/roleStore";
-import { RegisterDataType } from "../../api-authorization/authenticationService";
+import { Role } from "../../types/RoleType";
+import roleStore from "../../stores/roleStore";
+import { RegisterDataType } from "../../types/AuthTypes";
 import authService from "../../api-authorization/authenticationService";
 
 const Register = ({ navigation }: ScreenProps) => {
