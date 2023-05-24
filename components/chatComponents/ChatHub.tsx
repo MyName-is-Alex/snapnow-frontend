@@ -1,82 +1,43 @@
-import { useEffect, useState } from "react";
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { MessageLocalType } from "../../types/ChatType";
+import { hubLink } from "../../apiRoutes";
 
-const ChatHub = () => {
-    const [connection, setConnection] = useState<HubConnection | null>(null);
-    const [messages, setMessages] = useState<MessageLocalType[]>([]);
-    const [users, setUsers] = useState([]);
-    const [isTyping, setIsTyping] = useState<boolean>();
+import authService from "../../api-authorization/authenticationService";
 
-    useEffect(() => {
-        if (connection) {
-            if (isTyping) {
-                console.log("aaa");
-                connection.invoke("Typing");
-            } else {
-                connection.invoke("StopTyping");
-            }
-        }
-    }, [isTyping, connection]);
+export const startConnection = async (
+    setMessages: React.Dispatch<React.SetStateAction<MessageLocalType[]>>,
+    setConnection: React.Dispatch<React.SetStateAction<HubConnection | null>>
+) => {
+    const userEmail = await authService.getCurrentUserEmail();
+    try {
+        const connection = new HubConnectionBuilder()
+            .withUrl(hubLink + `?email=${userEmail}`)
+            .configureLogging(LogLevel.Information)
+            .build();
 
-    const joinRoom = async (user: string) => {
+        connection.on("ReceiveMessage", (user: string, message: string) => {
+            const messageObj: MessageLocalType = { senderName: user, message: message };
+            setMessages((prevMessages) => [...prevMessages, messageObj]);
+        });
+
+        connection.onclose((e) => {
+            setConnection(null);
+            setMessages([]);
+        });
+
+        await connection.start();
+        setConnection(connection);
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const sendMessage = async (message: string, connection: HubConnection | null) => {
+    if (connection != null) {
         try {
-            const connection = new HubConnectionBuilder()
-                .withUrl("https://localhost:7136/chat")
-                .configureLogging(LogLevel.Information)
-                .build();
-
-            connection.on("ReceiveMessage", (user: string, message: string) => {
-                const messageObj: MessageLocalType = { senderName: user, message: message };
-                setMessages((messages) => [...messages, messageObj]);
-            });
-
-            // connection.on("UsersInRoom", (users) => {
-            //     setUsers(users);
-            // });
-
-            connection.on("UserTyping", (user) => {
-                setIsTyping(true);
-            });
-
-            connection.on("UserStoppedTyping", (user) => {
-                setIsTyping(false);
-            });
-
-            connection.onclose((e) => {
-                setConnection(null);
-                setMessages([]);
-                setUsers([]);
-            });
-
-            await connection.start();
-            // await connection.invoke("JoinRoom", { user });
-
-            setConnection(connection);
+            await connection.invoke("SendMessage", message);
         } catch (e) {
             console.log(e);
         }
-    };
-
-    const sendMessage = async (message: string) => {
-        if (connection != null) {
-            try {
-                await connection.invoke("SendMessage", message);
-            } catch (e) {
-                console.log(e);
-            }
-        } else console.log("Connection object is null");
-    };
-
-    const closeConnection = async () => {
-        if (connection != null) {
-            try {
-                await connection.stop();
-            } catch (e) {
-                console.log(e);
-            }
-        } else console.log("Connection object is null");
-    };
+    } else console.log("Connection object is null");
 };
-
-export default ChatHub;

@@ -2,6 +2,8 @@ import { apiRoutes } from "../apiRoutes";
 import axios from "axios";
 import { expoSecureStore } from "./expoSecureStore";
 import { Cookie } from "../types/AuthTypes";
+import jwt_decode from "jwt-decode";
+import { JwtTokenType } from "../types/AuthTypes";
 
 const registerUser = (bodyFormData: FormData) => {
     return axios.post(apiRoutes.Register, bodyFormData, { headers: { "Content-Type": "multipart/form-data" } });
@@ -38,11 +40,23 @@ const isAuthenticated = async (): Promise<boolean> => {
     }
 };
 
+const getCurrentUserEmail = async (): Promise<string | null> => {
+    const user = await expoSecureStore.getValueFor("Auth");
+
+    if (user) {
+        const decodedToken: JwtTokenType = jwt_decode(JSON.parse(user)["value"]);
+        return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+    }
+
+    return null;
+};
+
 const authService = {
     isAuthenticated,
     registerUser,
     loginUser,
     logout,
+    getCurrentUserEmail,
 };
 
 export default authService;

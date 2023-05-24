@@ -1,5 +1,5 @@
-export const prefix = process.env.NODE_ENV === "development" ? "https://b1eb-109-166-129-222.ngrok-free.app/api" : "";
-
+export const prefix = process.env.NODE_ENV === "development" ? "https://9ad8-109-166-129-222.ngrok-free.app/api" : "";
+export const hubLink = process.env.NODE_ENV === "development" ? "https://9ad8-109-166-129-222.ngrok-free.app/chat" : "";
 export const apiRoutes = {
     Register: `${prefix}/authentication/register`,
     Login: `${prefix}/authentication/login`,

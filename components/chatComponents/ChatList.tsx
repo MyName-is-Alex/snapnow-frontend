@@ -5,9 +5,19 @@ import userStore from "../../stores/userStore";
 import { UserType } from "../../types/UserType";
 import ChatUser from "./ChatUser";
 import { TouchableOpacity } from "react-native";
+import { HubConnection } from "@microsoft/signalr";
+import { MessageLocalType } from "../../types/ChatType";
+import { startConnection } from "./ChatHub";
 
 const ChatList = ({ navigation }: ScreenProps) => {
     const [users, setUsers] = useState<UserType[]>();
+
+    const [connection, setConnection] = useState<HubConnection | null>(null);
+    const [messages, setMessages] = useState<MessageLocalType[]>([]);
+
+    useEffect(() => {
+        startConnection(setMessages, setConnection);
+    }, []);
 
     useEffect(() => {
         setUsers([]);
